@@ -27,7 +27,8 @@ Inspired by [Boris Cherny's best practices](https://x.com/bcherny/status/2007179
     │   ├── staff-reviewer.md          # Skeptical plan review before implementation
     │   ├── verify-app.md              # Thorough post-change verification
     │   ├── build-validator.md         # Build, lint, test, bundle validation
-    │   └── oncall-guide.md            # Production incident diagnosis
+    │   ├── oncall-guide.md            # Production incident diagnosis
+    │   └── product-manager.md        # Pressure-test features before engineering
     └── settings.json                  # Pre-allowed permissions and PostToolUse hooks
 ```
 
@@ -73,11 +74,11 @@ The central file Claude reads at the start of every session. It defines:
 
 ### Living Documentation (`docs/`)
 
-| File | Purpose | Updates when |
-|------|---------|-------------|
-| `spec.md` | What the product does — behaviors, business rules, constraints by feature | Behavior changes |
-| `tech.md` | How it's built — stack, schema, infrastructure, technical decisions | Architecture changes |
-| `lessons.md` | Mistake patterns and rules to prevent them | After any correction |
+| File         | Purpose                                                                   | Updates when         |
+| ------------ | ------------------------------------------------------------------------- | -------------------- |
+| `spec.md`    | What the product does — behaviors, business rules, constraints by feature | Behavior changes     |
+| `tech.md`    | How it's built — stack, schema, infrastructure, technical decisions       | Architecture changes |
+| `lessons.md` | Mistake patterns and rules to prevent them                                | After any correction |
 
 Claude consults `docs/spec.md`, `docs/tech.md`, and `docs/lessons.md` at session start for context, and updates them as part of the task management workflow.
 
@@ -85,15 +86,15 @@ Claude consults `docs/spec.md`, `docs/tech.md`, and `docs/lessons.md` at session
 
 Type `/` in Claude Code to see available commands:
 
-| Command | What it does |
-|---------|-------------|
-| `/commit-push-pr` | Full git workflow: stage, commit, push, open PR |
-| `/quick-commit` | Stage all changes and commit with a conventional message |
-| `/test-and-fix` | Run tests, analyze failures, fix them, re-run |
-| `/review-changes` | Review uncommitted changes and suggest improvements |
-| `/grill` | Adversarial code review — won't let you ship until it passes |
-| `/techdebt` | Find duplicated and dead code, clean it up |
-| `/worktree` | Create a git worktree for a parallel Claude session |
+| Command           | What it does                                                 |
+| ----------------- | ------------------------------------------------------------ |
+| `/commit-push-pr` | Full git workflow: stage, commit, push, open PR              |
+| `/quick-commit`   | Stage all changes and commit with a conventional message     |
+| `/test-and-fix`   | Run tests, analyze failures, fix them, re-run                |
+| `/review-changes` | Review uncommitted changes and suggest improvements          |
+| `/grill`          | Adversarial code review — won't let you ship until it passes |
+| `/techdebt`       | Find duplicated and dead code, clean it up                   |
+| `/worktree`       | Create a git worktree for a parallel Claude session          |
 
 ### Subagents
 
@@ -103,16 +104,18 @@ Ask Claude to use a subagent:
 "Use the code-simplifier agent on the code I just wrote"
 "Run verify-app to test everything works"
 "Use staff-reviewer to review my plan before I start"
+"Spawn 3 product-manager agents in parallel — one for onboarding, one for billing, one for notifications. Each should propose 2 high-impact features based on docs/spec.md and evaluate them."
 ```
 
-| Agent | Purpose |
-|-------|---------|
-| `code-simplifier` | Reduce complexity without changing behavior |
-| `code-architect` | Design reviews and architectural analysis |
-| `staff-reviewer` | Skeptical plan review — finds problems before implementation |
-| `verify-app` | Full verification: static analysis, tests, edge cases |
-| `build-validator` | Clean build, typecheck, lint, test, bundle analysis |
-| `oncall-guide` | Incident response: assess severity, diagnose, mitigate |
+| Agent             | Purpose                                                       |
+| ----------------- | ------------------------------------------------------------- |
+| `code-simplifier` | Reduce complexity without changing behavior                   |
+| `code-architect`  | Design reviews and architectural analysis                     |
+| `staff-reviewer`  | Skeptical plan review — finds problems before implementation  |
+| `verify-app`      | Full verification: static analysis, tests, edge cases         |
+| `build-validator` | Clean build, typecheck, lint, test, bundle analysis           |
+| `oncall-guide`    | Incident response: assess severity, diagnose, mitigate        |
+| `product-manager` | Pressure-test feature proposals before they reach engineering |
 
 ### Settings
 
