@@ -28,7 +28,8 @@ Inspired by [Boris Cherny's best practices](https://x.com/bcherny/status/2007179
     │   ├── verify-app.md              # Thorough post-change verification
     │   ├── build-validator.md         # Build, lint, test, bundle validation
     │   ├── oncall-guide.md            # Production incident diagnosis
-    │   └── product-manager.md        # Pressure-test features before engineering
+    │   ├── product-manager.md        # Pressure-test features before engineering
+    │   └── ui-designer.md            # UI/UX design review across platforms
     └── settings.json                  # Pre-allowed permissions and PostToolUse hooks
 ```
 
@@ -118,6 +119,7 @@ Each agent automatically loads project context from `docs/spec.md`, `docs/tech.m
 | `build-validator` | Clean build, typecheck, lint, test, bundle analysis           |
 | `oncall-guide`    | Incident response: assess severity, diagnose, mitigate        |
 | `product-manager` | Pressure-test feature proposals before they reach engineering |
+| `ui-designer`     | UI/UX design review across web, mobile web, and native        |
 
 ### Settings
 
